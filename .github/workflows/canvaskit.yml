@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Install python3
         run: sudo apt-get update && sudo apt-get install -y python3
       - name: Download Source Code
@@ -19,4 +18,6 @@ jobs:
           cd skia
           python3 tools/git-sync-deps
           python3 bin/fetch-ninja
+      - name: Build the code
+        run: |
           ./modules/canvaskit/compile.sh release no_skottie no_sksl_trace no_alias_font no_effects_deserialization no_encode_jpeg no_encode_png no_encode_webp legacy_draw_vertices no_embedded_font no_woff2

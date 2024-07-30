@@ -18,4 +18,5 @@ jobs:
           python3 bin/fetch-ninja
       - name: Build the code
         run: |
+          cd skia
           ./modules/canvaskit/compile.sh release no_skottie no_sksl_trace no_alias_font no_effects_deserialization no_encode_jpeg no_encode_png no_encode_webp legacy_draw_vertices no_embedded_font no_woff2

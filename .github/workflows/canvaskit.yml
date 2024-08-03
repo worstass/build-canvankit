@@ -12,7 +12,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y python3
       - name: Download Source Code
         run: |
-          git clone --depth 1 https://skia.googlesource.com/skia.git
+          git clone --depth 1 -b canvaskit/0.38.2 https://skia.googlesource.com/skia.git
           cd skia
           python3 tools/git-sync-deps
           python3 bin/fetch-ninja

@@ -19,7 +19,7 @@ jobs:
       - name: Build the code
         run: |
           cd skia
-          ./modules/canvaskit/compile.sh release no_skp_serialization no_effects_deserialization no_skottie no_font no_woff2 no_alias_font no_codecs
+          ./modules/canvaskit/compile.sh release no_skp_serialization no_effects_deserialization no_skottie no_font no_woff2 no_alias_font
       - name: Archive output
         uses: actions/upload-artifact@v4
         with:

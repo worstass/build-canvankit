@@ -19,8 +19,8 @@ jobs:
       - name: Build the code
         run: |
           cd skia
-          ./modules/canvaskit/compile.sh release no_skottie no_font
-          ./modules/canvaskit/compile.sh debug_build no_skottie no_font
+          ./modules/canvaskit/compile.sh release no_skottie no_font legacy_draw_vertices
+          ./modules/canvaskit/compile.sh debug_build no_skottie no_font legacy_draw_vertices
       - name: Archive release output
         uses: actions/upload-artifact@v4
         with:

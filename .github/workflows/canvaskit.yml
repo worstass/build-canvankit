@@ -30,7 +30,6 @@ jobs:
         run: |
           cd skia
           ./modules/canvaskit/compile.sh release no_font
-          ./modules/canvaskit/compile.sh debug_build no_font
       - name: Archive release output
         uses: actions/upload-artifact@v4
         with:

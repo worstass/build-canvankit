@@ -16,8 +16,9 @@ jobs:
         run: |
           wget https://raw.githubusercontent.com/flutter/engine/$FLUTTER_VERSION/DEPS
           rev=$(grep -e "'skia_revision':" DEPS | awk -F: '{print $2}' | sed "s/[',]//g")
-          git clone --depth 1 -b $rev https://skia.googlesource.com/skia.git
+          git clone https://skia.googlesource.com/skia.git
           cd skia
+          git checkout $rev
           python3 tools/git-sync-deps
           python3 bin/fetch-ninja
       - name: Patch the build script

@@ -6,21 +6,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FLUTTER_VERSION: 3.24.1
     steps:
       - uses: actions/checkout@v4
       - name: Install python3
-        run: sudo apt-get update && sudo apt-get install -y python3
+        run: sudo apt-get update && sudo apt-get install -y python3 wget awk sed
       - name: Download Source Code
         run: |
-          git clone --depth 1 -b canvaskit/0.38.2 https://skia.googlesource.com/skia.git
+          wget https://raw.githubusercontent.com/flutter/engine/$FLUTTER_VERSION/DEPS
+          rev=$(grep -e "'skia_revision':" DEPS | awk -F: '{print $2}' | sed "s/[',]//g")
+          git clone --depth 1 -b $rev https://skia.googlesource.com/skia.git
           cd skia
           python3 tools/git-sync-deps
           python3 bin/fetch-ninja
+      - name: Patch the build script
+        run: |
+          wget https://raw.githubusercontent.com/flutter/engine/$FLUTTER_VERSION/skia/modules/canvaskit/BUILD.gn
+          cp -f BUILD.gn skia/modules/canvaskit/
+          sed -i "s/\/\/flutter\/third_party\/skia/..\/../g" modules/canvaskit/BUILD.gn
       - name: Build the code
         run: |
           cd skia
-          ./modules/canvaskit/compile.sh release no_skottie no_font legacy_draw_vertices
-          ./modules/canvaskit/compile.sh debug_build no_skottie no_font legacy_draw_vertices
+          ./modules/canvaskit/compile.sh release no_font
+          ./modules/canvaskit/compile.sh debug_build no_font
       - name: Archive release output
         uses: actions/upload-artifact@v4
         with:

@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install python3
-        run: sudo apt-get update && sudo apt-get install -y python3 wget awk sed
+        run: sudo apt-get update && sudo apt-get install -y python3 wget gawk sed
       - name: Download Source Code
         run: |
           wget https://raw.githubusercontent.com/flutter/engine/$FLUTTER_VERSION/DEPS

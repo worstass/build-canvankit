@@ -35,8 +35,3 @@ jobs:
         with:
           name: canvaskit_wasm_release
           path: skia/out/canvaskit_wasm
-      - name: Archive debug output
-        uses: actions/upload-artifact@v4
-        with:
-          name: canvaskit_wasm_debug
-          path: skia/out/canvaskit_wasm_debug

@@ -29,7 +29,7 @@ jobs:
       - name: Build the code
         run: |
           cd skia
-          ./modules/canvaskit/compile.sh release no_font
+          ./modules/canvaskit/compile.sh release ${{ vars.BUILD_OPTS }}
       - name: Archive release output
         uses: actions/upload-artifact@v4
         with:

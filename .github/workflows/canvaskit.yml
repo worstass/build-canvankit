@@ -29,9 +29,9 @@ jobs:
       - name: Build the code
         run: |
           cd skia
-          ./modules/canvaskit/compile.sh release $${{ vars.NO_FONT }} ${{ vars.BUILD_OPTS }}
+          ./modules/canvaskit/compile.sh release ${{ vars.NO_FONT }} ${{ vars.BUILD_OPTS }}
       - name: Archive release output
         uses: actions/upload-artifact@v4
         with:
           name: canvaskit_wasm_release
-          path: skia/out/canvaskit_wasm_$${{ vars.NO_FONT }}
+          path: skia/out/canvaskit_wasm_${{ vars.NO_FONT }}

@@ -1,0 +1,27 @@
+name: Build Canvaskit Standalone
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install python3
+        run: sudo apt-get update && sudo apt-get install -y python3
+      - name: Download Source Code
+        run: |
+          git clone --depth 1 https://skia.googlesource.com/skia.git
+          cd skia
+          python3 tools/git-sync-deps
+          python3 bin/fetch-ninja
+      - name: Build the code
+        run: |
+          cd skia
+          ./modules/canvaskit/compile.sh release ${{ vars.NO_FONT }}
+      - name: Archive output
+        uses: actions/upload-artifact@v4
+        with:
+          name: canvaskit_wasm-${{ vars.NO_FONT }}
+          path: skia/out/canvaskit_wasm

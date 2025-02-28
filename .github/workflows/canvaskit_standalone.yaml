@@ -16,9 +16,12 @@ jobs:
         run: |
           wget https://raw.githubusercontent.com/flutter/flutter/$FLUTTER_VERSION/DEPS
           rev=$(grep -e "'skia_revision':" DEPS | awk -F: '{print $2}' | sed "s/[',]//g")
-          git clone https://skia.googlesource.com/skia.git
+          mkdir skia
           cd skia
-          git checkout $rev
+          git init
+          git remote add origin https://github.com/google/skia.git
+          git fetch --depth 1 origin $rev
+          git checkout FETCH_HEAD
           python3 tools/git-sync-deps
           python3 bin/fetch-ninja
       - name: Build the code

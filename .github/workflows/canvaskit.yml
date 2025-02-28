@@ -33,5 +33,5 @@ jobs:
       - name: Archive release output
         uses: actions/upload-artifact@v4
         with:
-          name: canvaskit_wasm_release
-          path: skia/out/canvaskit_wasm_${{ vars.NO_FONT }}
+          name: canvaskit_wasm_release_${{ vars.NO_FONT }}
+          path: skia/out/canvaskit_wasm

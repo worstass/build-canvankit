@@ -6,21 +6,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FLUTTER_VERSION: 3.29.0    
     steps:
       - uses: actions/checkout@v4
       - name: Install python3
-        run: sudo apt-get update && sudo apt-get install -y python3
+        run: sudo apt-get update && sudo apt-get install -y python3 wget gawk sed
       - name: Download Source Code
         run: |
-          git clone --depth 1 https://skia.googlesource.com/skia.git
+          wget https://raw.githubusercontent.com/flutter/flutter/$FLUTTER_VERSION/DEPS
+          rev=$(grep -e "'skia_revision':" DEPS | awk -F: '{print $2}' | sed "s/[',]//g")
+          git clone https://skia.googlesource.com/skia.git
           cd skia
+          git checkout $rev
           python3 tools/git-sync-deps
           python3 bin/fetch-ninja
       - name: Build the code
         run: |
           cd skia
           ./modules/canvaskit/compile.sh release ${{ vars.NO_FONT }}
-      - name: Archive output
+      - name: Archive release output
         uses: actions/upload-artifact@v4
         with:
           name: canvaskit_wasm-${{ vars.NO_FONT }}
